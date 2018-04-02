@@ -8,7 +8,9 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 
 var app = express();
 
-var Usuario = require('../models/usuario')
+var Usuario = require('../models/usuario');
+
+
 
 // ===================================
 // Obtener todos los usuarios        =
@@ -16,28 +18,38 @@ var Usuario = require('../models/usuario')
 
 app.get('/', (req, res, next) => {
 
-    Usuario.find({}, 'nombre email img role').exec(
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
 
-        (err, usuarios) => {
+    Usuario.find({}, 'nombre email img role')
+        .skip(desde)
+        .limit(5)
+        .exec(
 
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    mensaje: 'error cargando usuarios',
-                    errors: err
-                });
-            }
+            (err, usuarios) => {
 
-            res.status(200).json({
-                ok: true,
-                usuarios: usuarios
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'error cargando usuarios',
+                        errors: err
+                    });
+                }
+
+                Usuario.count({}, (err, conteo) => {
+
+                    res.status(200).json({
+                        ok: true,
+                        usuarios: usuarios,
+                        total: conteo
+                    });
+
+                })
+
             });
 
-        });
-
-
-
 });
+
 
 
 
