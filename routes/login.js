@@ -21,11 +21,12 @@ const { OAuth2Client } = require('google-auth-library');
 
 app.post('/google', (req, res) => {
 
+
+
     var token = req.body.token || 'xxx';
     const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
     async function verify() {
-
 
         /* if (e) {
 
@@ -50,7 +51,6 @@ app.post('/google', (req, res) => {
         // If request specified a G Suite domain:
         //const domain = payload['hd'];
 
-
         Usuario.findOne({ email: payload.email }, (err, usuario) => {
 
             if (err) {
@@ -74,7 +74,6 @@ app.post('/google', (req, res) => {
                         ok: true,
                         mensaje: 'Debe usar su autenticacion normal',
 
-
                     });
 
                 } else {
@@ -82,7 +81,6 @@ app.post('/google', (req, res) => {
                     usuario.password = ":)";
 
                     var token = jwt.sign({ usuario: usuario }, SEED, { expiresIn: 15500 }) // 4 horas
-
 
                     res.status(200).json({
                         ok: true,
@@ -119,28 +117,24 @@ app.post('/google', (req, res) => {
 
             }
 
-            var token = jwt.sign({ usuario: UsuarioDB }, SEED, { expiresIn: 15500 }) // 4 horas
+            // UsuarioDB = {
+            //     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJnb29nbGUiOnRydWUsIl9pZCI6IjVhYzRkNTkwYjUxZDI5NGI0NGQzYjAwNCIsIm5vbWJyZSI6IkpvaG4gRmVybmFuZG8gQ2FzdGHDsW8gU2VuYSIsImVtYWlsIjoiam9obmZjcy4yMC4wNEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjopIiwiaW1nIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1IeThiTUFHZnY1OC9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBQS9BQ0xHeVdCR3BFdEVPRHd6SXZwOWEzX182VDhwV21VUUlnL3M5Ni1jL3Bob3RvLmpwZyIsIl9fdiI6MH0sImlhdCI6MTUyMjg1MjA2NiwiZXhwIjoxNTIyODY3NTY2fQ.ylPWpujlHVE-G939j51huF1oiV-fTnK4P22drF58kXw'
+            // }
 
+            var token = jwt.sign({ usuario: usuario }, SEED, { expiresIn: 15500 }) // 4 horas
 
-            res.status(200).json({
-                ok: true,
-                usuario: usuario,
-                token: token,
-                id: usuario._id
-            });
-
-
+            // res.status(200).json({
+            //     ok: true,
+            //     usuario: usuario,
+            //     token: token,
+            //     id: usuario._id
+            // });
 
         });
 
-
-
     } //fin verify 
 
-
     verify().catch(error => {
-
-
 
         return res.status(400).json({
 
@@ -152,15 +146,12 @@ app.post('/google', (req, res) => {
 
 
 
-
-
     }); // fin catch
 
 
 
+});
 
-
-}); // final post
 
 // ======================
 // Autenticacion normal =

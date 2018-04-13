@@ -117,7 +117,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                 });
             }
 
-            pathViejo = './uploads/usuarios/' + usuario.img;
+            pathViejo = './upload/usuarios/' + usuario.img;
 
             // si existe elimina la anterior
 
