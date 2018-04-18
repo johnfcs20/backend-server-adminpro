@@ -66,7 +66,7 @@ app.get('/', (req, res, next) => {
 app.get('/:id', (req, res) => {
 
     var id = req.params.id;
-    hospital.findById(id)
+    Hospital.findById(id)
         .populate('usuario', 'nombre img email')
         .exec((err, hospital) => {
             if (err) {
@@ -77,7 +77,7 @@ app.get('/:id', (req, res) => {
                 });
             }
 
-            if (!hospial) {
+            if (!hospital) {
                 return res.status(400).json({
                     ok: false,
                     mensaje: 'El hospital con el id ' + id + 'no existe',
@@ -179,13 +179,13 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 
     hospital.save((err, hospitalGuardado) => {
 
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                mensaje: 'error al crear hospital',
-                errors: err
-            });
-        }
+        // if (err) {
+        //     return res.status(400).json({
+        //         ok: false,
+        //         mensaje: 'error al crear hospital',
+        //         errors: err
+        //     });
+        // }
 
         res.status(201).json({
             ok: true,
