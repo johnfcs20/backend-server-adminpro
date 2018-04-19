@@ -60,7 +60,7 @@ app.get('/', (req, res, next) => {
 // Actualizar un nuevo usuario       =
 // ===================================
 
-app.put('/:id', (req, res) => {
+app.put('/:id', [mdAutenticacion.verificaToken, mdAutenticacion.verificaADMIN_ROLE_o_MismoUsuario], (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -171,7 +171,7 @@ app.post('/', (req, res) => {
 // ===================================
 
 
-app.delete('/:id', (req, res) => {
+app.delete('/:id', [mdAutenticacion.verificaToken, mdAutenticacion.verificaADMIN_ROLE], (req, res) => {
 
     var id = req.params.id;
 

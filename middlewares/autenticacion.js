@@ -36,3 +36,53 @@ exports.verificaToken = function(req, res, next) {
 
 
 }
+
+
+
+// ===================================
+// Verificar ADMIN                   =
+// ===================================
+
+exports.verificaADMIN_ROLE = function(req, res, next) {
+
+    var usuario = req.usuario;
+
+    if (usuario.role === 'ADMIN_ROLE') {
+        next();
+        return;
+    } else {
+
+        return res.status(401).json({
+            ok: false,
+            mensaje: 'Token incorrecto - No es administrador',
+            errors: { message: 'No es un administrador, no puede ingresar' }
+
+        });
+
+    }
+}
+
+
+// ===================================
+// Verificar ADMIN o mismo usuario   =
+// ===================================
+
+exports.verificaADMIN_ROLE_o_MismoUsuario = function(req, res, next) {
+
+    var usuario = req.usuario;
+    var id = req.params.id;
+
+    if (usuario.role === 'ADMIN_ROLE' || usuario._id === id) {
+        next();
+        return;
+    } else {
+
+        return res.status(401).json({
+            ok: false,
+            mensaje: 'Token incorrecto - Ni es el mismo usuario - No es administrador',
+            errors: { message: 'No es un administrador, no puede ingresar' }
+
+        });
+
+    }
+}
