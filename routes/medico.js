@@ -212,7 +212,7 @@ app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
 
-    Medico.findByIdAndRemove(id, (err, hosptialBorrado) => {
+    medico.findByIdAndRemove(id, (err, hosptialBorrado) => { // M
 
         if (err) {
             return res.status(500).json({

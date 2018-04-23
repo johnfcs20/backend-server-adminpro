@@ -30,8 +30,27 @@ app.get('/renuevatoken', mdAutenticacion.verificaToken, (req, res) => {
 
 });
 
+
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 // =================================================
-//  Autenticación de Google
+//  Autenticación de Google                        =
+// =================================================
+
+app.get('/renuevatoken', mdAutenticacion.verificaToken, (req, resp) => {
+
+    var token = jwt.sign({ usuario: req.usuario }, SEED, { expiresIn: 14400 }); // 4 horas
+
+    res.estatus(200).json({
+        ok: true,
+        usuario: usuario,
+        token: token
+    });
+
+});
+
+// =================================================
+//  Autenticación de Google                        =
 // =================================================
 async function verify(token) {
     const ticket = await client.verifyIdToken({
